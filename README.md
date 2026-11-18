@@ -1,5 +1,9 @@
 # StyleID — Tienda de ropa online
 
+🌐 **Ver la tienda en línea:** <https://styleid.onrender.com>
+
+> Está en el plan gratuito de Render: si nadie la visitó en un rato, la primera carga tarda unos 50 segundos.
+
 Tienda web de ropa para mujer y hombre hecha en Ecuador. Incluye catálogo de
 100 prendas con filtros, carrito, pedidos con seguimiento, opiniones con
 estrellas, favoritos, asesora de estilo con IA y panel de administrador.
