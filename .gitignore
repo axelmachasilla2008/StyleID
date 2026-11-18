@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+
+# Compilado de Vite (se genera con `npm run build`)
+frontend/dist/
+
+# Secretos: nunca subir
+.env
+.env.*
+!.env.example
+
+# Fotos subidas sin Cloudinary
+backend/uploads/
+
+# Herramientas y sistema
+.claude/
+.vscode/
+graphify-out/
+npm-debug.log*
+Thumbs.db
+.DS_Store

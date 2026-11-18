@@ -1,0 +1,16 @@
+{
+  "name": "styleid",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Tienda de ropa StyleID: React (Vite) + Express + MongoDB Atlas",
+  "scripts": {
+    "install:all": "npm install --prefix frontend && npm install --prefix backend",
+    "dev": "node scripts/dev.js",
+    "build": "npm run build --prefix frontend",
+    "start": "npm start --prefix backend",
+    "test:api": "npm run test:api --prefix backend"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}
