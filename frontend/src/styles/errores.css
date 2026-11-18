@@ -1,0 +1,316 @@
+/* =====================================================
+   StyleID — Errores: páginas 404/500 y aviso dentro de la tienda
+   (colores propios: funciona sin sala.css)
+   ===================================================== */
+
+/* ---------- Páginas de error ---------- */
+.error-page {
+    min-height: 100dvh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    background:
+        radial-gradient(700px 480px at 50% -10%, rgba(201, 93, 107, 0.22), transparent 70%),
+        #0c0810;
+    color: #f7f2ee;
+    font-family: 'Montserrat', system-ui, sans-serif;
+    box-sizing: border-box;
+}
+
+.error-page *, .error-page *::before, .error-page *::after { box-sizing: border-box; }
+
+.error-card {
+    width: min(640px, 100%);
+    padding: clamp(24px, 5vw, 44px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 26px;
+    background: linear-gradient(165deg, #1d1628, #120e1a 62%);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: errorIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes errorIn {
+    from { opacity: 0; transform: translateY(18px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+}
+
+.error-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #f7f2ee;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.error-brand img { border-radius: 50%; }
+
+.error-code {
+    margin: 18px 0 6px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4.5rem, 18vw, 7.5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, #e6a3ac, #c95d6b 55%, #8e2f3c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.error-code i {
+    display: inline-block;
+    margin: 0 0.06em;
+    font-size: 0.72em;
+    vertical-align: 0.08em;
+    color: #e6a3ac;
+    -webkit-text-fill-color: #e6a3ac;
+    animation: errorSwing 3.2s ease-in-out infinite;
+    transform-origin: 50% 0;
+}
+
+@keyframes errorSwing {
+    0%, 100% { transform: rotate(-7deg); }
+    50% { transform: rotate(7deg); }
+}
+
+.error-page h1 {
+    margin: 0 0 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+    line-height: 1.15;
+    text-wrap: balance;
+}
+
+.error-lead {
+    max-width: 46ch;
+    margin: 0 auto;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: rgba(247, 242, 238, 0.78);
+    text-wrap: pretty;
+}
+
+.error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 24px 0 22px;
+}
+
+.error-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+    background: transparent;
+    color: #f7f2ee;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, filter 0.2s ease;
+}
+
+.error-btn:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); }
+.error-btn:active { transform: scale(0.97); }
+.error-btn.primary { border-color: transparent; background: linear-gradient(135deg, #8e2f3c, #c95d6b); }
+.error-btn.primary:hover { filter: brightness(1.1); }
+
+.error-tips {
+    display: grid;
+    gap: 8px;
+    max-width: 48ch;
+    margin: 0 auto 22px;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: rgba(247, 242, 238, 0.72);
+}
+
+.error-tips li { position: relative; padding-left: 22px; }
+.error-tips li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.6em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #c95d6b;
+}
+
+.error-page a:not(.error-btn):not(.error-brand) { color: #e6a3ac; }
+
+/* Detalles técnicos (páginas y aviso) */
+.error-tech {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.25);
+    text-align: left;
+}
+
+.error-tech summary {
+    padding: 12px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(247, 242, 238, 0.75);
+    cursor: pointer;
+    list-style-position: inside;
+}
+
+.error-tech summary:hover { color: #fff; }
+.error-tech[open] summary { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+
+.error-tech dl {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 6px 14px;
+    margin: 0;
+    padding: 14px 16px 4px;
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    font-size: 0.74rem;
+}
+
+.error-tech dt { color: #e6a3ac; }
+.error-tech dd { margin: 0; color: rgba(247, 242, 238, 0.85); overflow-wrap: anywhere; }
+
+.error-hint {
+    margin: 0;
+    padding: 10px 16px 4px;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: rgba(247, 242, 238, 0.7);
+}
+
+.error-tech code {
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.09);
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    font-size: 0.92em;
+}
+
+.error-copy {
+    margin: 10px 16px 14px;
+    padding: 7px 14px;
+    border: 1px solid rgba(230, 163, 172, 0.45);
+    border-radius: 40px;
+    background: transparent;
+    color: #e6a3ac;
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.error-copy:hover { background: rgba(201, 93, 107, 0.18); }
+
+.error-btn:focus-visible,
+.error-copy:focus-visible,
+.error-tech summary:focus-visible,
+.app-error button:focus-visible {
+    outline: 2px solid #e6a3ac;
+    outline-offset: 3px;
+}
+
+/* ---------- Aviso dentro de la tienda (errores.js) ---------- */
+.app-error {
+    position: fixed;
+    left: 50%;
+    top: 14px;
+    z-index: 500;
+    width: min(560px, calc(100% - 24px));
+    border: 1px solid rgba(255, 179, 174, 0.4);
+    border-radius: 18px;
+    background: rgba(32, 16, 22, 0.97);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55);
+    color: #f7f2ee;
+    font-family: 'Montserrat', system-ui, sans-serif;
+    opacity: 0;
+    transform: translate(-50%, -22px);
+    transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.app-error.is-open { opacity: 1; transform: translate(-50%, 0); }
+.app-error.is-ok { border-color: rgba(126, 226, 168, 0.5); background: rgba(14, 32, 24, 0.97); }
+
+.app-error-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+}
+
+.app-error-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba(255, 120, 110, 0.18);
+    color: #ffb3ae;
+}
+
+.app-error.is-ok .app-error-icon { background: rgba(126, 226, 168, 0.16); color: #7ee2a8; }
+
+.app-error-text { flex: 1; min-width: 0; }
+.app-error-text strong { display: block; font-size: 0.92rem; }
+.app-error-text p { margin: 3px 0 0; font-size: 0.8rem; line-height: 1.5; color: rgba(247, 242, 238, 0.78); }
+
+.app-error-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+.app-error button {
+    padding: 7px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 40px;
+    background: transparent;
+    color: #f7f2ee;
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.app-error button:hover { background: rgba(255, 255, 255, 0.09); }
+.app-error button.primary { border-color: transparent; background: linear-gradient(135deg, #8e2f3c, #c95d6b); }
+
+.app-error-close {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+}
+
+.app-error .error-tech { margin: 0 14px 14px; }
+.app-error .error-tech[hidden] { display: none; }
+
+body.light-theme .app-error { background: rgba(255, 244, 242, 0.98); border-color: #e8b4b0; color: #2b1d17; box-shadow: 0 22px 60px rgba(43, 20, 25, 0.25); }
+body.light-theme .app-error.is-ok { background: rgba(240, 252, 245, 0.98); border-color: #9ed9b8; }
+body.light-theme .app-error-text p { color: rgba(43, 29, 23, 0.75); }
+body.light-theme .app-error button { border-color: #d9c1b6; color: #2b1d17; }
+body.light-theme .app-error button.primary { color: #fff; }
+body.light-theme .app-error-icon { color: #b3261e; }
+body.light-theme .app-error .error-tech { background: #fff; border-color: #ecdcce; }
+body.light-theme .app-error .error-tech summary,
+body.light-theme .app-error .error-tech dd,
+body.light-theme .app-error .error-hint { color: #4a3830; }
+body.light-theme .app-error .error-tech dt { color: #8e2f3c; }
+body.light-theme .app-error .error-tech code { background: #f1e4da; }
+
+@media (prefers-reduced-motion: reduce) {
+    .error-card, .error-code i { animation: none; }
+    .app-error { transition: none; }
+}

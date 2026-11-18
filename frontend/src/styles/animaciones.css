@@ -1,0 +1,178 @@
+/* =====================================================
+   StyleID — Animaciones y detalles de comodidad (todas las páginas)
+   Solo anima opacity y transform; todo se apaga con
+   «reducir movimiento» del sistema.
+   ===================================================== */
+
+/* --- Cambio de página suave (Chrome/Edge/Safari recientes) --- */
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: vtOut 0.18s ease-in both;
+}
+
+::view-transition-new(root) {
+    animation: vtIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes vtOut {
+    to { opacity: 0; }
+}
+
+@keyframes vtIn {
+    from { opacity: 0; transform: translateY(10px); }
+}
+
+/* --- Aparición al hacer scroll (animaciones.js pone y quita estas clases) --- */
+.anim-in {
+    opacity: 0;
+    transform: translateY(22px);
+}
+
+.anim-in.is-in {
+    opacity: 1;
+    transform: none;
+    transition:
+        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--anim-delay, 0ms),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) var(--anim-delay, 0ms);
+}
+
+/* --- Los botones «se hunden» un poco al tocarlos --- */
+.btn-buy:active,
+.btn-shop:active,
+.btn-primary:active,
+.pm-add:active,
+.pm-size span:active,
+.cookie-btn:active,
+.checkout-btn:active,
+.mini-btn:active,
+.btn-ghost-sm:active,
+.pick-view:active,
+.chat-form button:active,
+.chat-chips button:active,
+.orders-filters button:active,
+.gender-switch button:active,
+.category-chips button:active,
+.copy-btn:active,
+.fav-remove:active,
+.cart-btn:active {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+}
+
+/* --- Las fotos de las tarjetas se acercan un poco al pasar el cursor --- */
+@media (hover: hover) {
+    .product-card .product-img img,
+    .category-card img,
+    .fav-media img,
+    .pick-media img {
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .product-card:hover .product-img img,
+    .category-card:hover img,
+    .fav-card:hover .fav-media img,
+    .pick-card:hover .pick-media img {
+        transform: scale(1.06);
+    }
+}
+
+/* --- El contador del carrito salta cuando cambia --- */
+.cart-count.is-bump {
+    animation: cartBump 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cartBump {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.45); }
+    100% { transform: scale(1); }
+}
+
+/* --- Barra fina que muestra cuánto has bajado en la página --- */
+.scroll-progress {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 450;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #8e2f3c, #c95d6b, #e6a3ac);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    pointer-events: none;
+}
+
+/* --- Botón para volver arriba --- */
+.to-top {
+    position: fixed;
+    right: 22px;
+    bottom: 96px;
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    background: rgba(22, 17, 31, 0.9);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: #f7f2ee;
+    font-size: 0.95rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s, background-color 0.2s ease;
+}
+
+.to-top.is-on {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.to-top:hover { background: #8e2f3c; }
+.to-top:active { transform: scale(0.94); }
+
+.to-top:focus-visible {
+    outline: 2px solid #e6a3ac;
+    outline-offset: 3px;
+}
+
+body.light-theme .to-top {
+    background: rgba(255, 250, 246, 0.95);
+    border-color: #e3d0c2;
+    color: #2b1d17;
+}
+
+body.light-theme .to-top:hover { background: #8e2f3c; color: #fff; }
+
+@media (max-width: 560px) {
+    .to-top { right: 14px; bottom: 84px; width: 40px; height: 40px; }
+}
+
+/* --- Sin movimiento si la persona lo pidió en su sistema --- */
+@media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+
+    .anim-in,
+    .anim-in.is-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .cart-count.is-bump { animation: none; }
+    .to-top { transition: opacity 0.2s ease, visibility 0.2s; transform: none; }
+    .scroll-progress { display: none; }
+
+    .product-card:hover .product-img img,
+    .category-card:hover img,
+    .fav-card:hover .fav-media img,
+    .pick-card:hover .pick-media img {
+        transform: none;
+    }
+}
