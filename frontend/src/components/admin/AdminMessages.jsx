@@ -1,15 +1,26 @@
 // =====================================================
 // Comentarios y pedidos personalizados que llegan desde la tienda.
 // =====================================================
+import { useState } from 'react';
 import { api } from '../../lib/api.js';
+import { showToast } from '../../lib/toast.js';
 
 const REQUEST_LABELS = { ropa: 'Prenda a futuro', estampado: 'Estampado personalizado', otro: 'Otra idea' };
 
-export default function AdminMessages({ messages, token }) {
+export default function AdminMessages({ messages, token, onSaved }) {
+    const [saving, setSaving] = useState(false);
+
     async function setStatus(id, status) {
+        if (saving) return;
+        setSaving(true);
         try {
-            await api(`/api/admin/messages/${encodeURIComponent(id)}`, { method: 'PUT', body: { status }, admin: token });
-        } catch (err) { /* el aviso de error ya lo muestra la tienda */ }
+            const message = await api(`/api/admin/messages/${encodeURIComponent(id)}`, { method: 'PUT', body: { status }, admin: token });
+            onSaved(message);
+        } catch (err) {
+            showToast(err.message);
+        } finally {
+            setSaving(false);
+        }
     }
 
     return (
@@ -44,7 +55,7 @@ export default function AdminMessages({ messages, token }) {
                                     <td className="msg-text">{m.text}</td>
                                     <td>{new Date(m.createdAt).toLocaleDateString('es-EC')}</td>
                                     <td>
-                                        <select className="status-select msg-status" defaultValue={m.status} onChange={(e) => setStatus(m._id, e.target.value)}>
+                                        <select className="status-select msg-status" value={m.status} disabled={saving} onChange={(e) => setStatus(m._id, e.target.value)}>
                                             <option value="nuevo">nuevo</option>
                                             <option value="atendido">atendido</option>
                                         </select>

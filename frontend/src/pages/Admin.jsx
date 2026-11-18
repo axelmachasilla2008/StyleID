@@ -77,6 +77,11 @@ export default function Admin() {
     async function login(e) {
         e.preventDefault();
         setMsg('');
+        if (!password.trim()) {
+            setMsg('Escribe la contraseña.');
+            passRef.current?.focus();
+            return;
+        }
         try {
             const res = await api('/api/admin/login', { method: 'POST', body: { password } });
             guardar(TOKEN_KEY, res.token, 'session');
@@ -89,6 +94,19 @@ export default function Admin() {
     }
 
     const update = (key) => (value) => setData((d) => ({ ...d, [key]: value }));
+
+    function updateMessage(message) {
+        setData((d) => {
+            if (!d) return d;
+            const previous = d.messages.find((m) => m._id === message._id);
+            const pending = (m) => Number(m?.type === 'pedido' && m.status === 'nuevo');
+            return {
+                ...d,
+                messages: d.messages.map((m) => (m._id === message._id ? message : m)),
+                stats: { ...d.stats, pendingRequests: d.stats.pendingRequests + pending(message) - pending(previous) }
+            };
+        });
+    }
 
     return (
         <PageShell cookies={false}>
@@ -135,7 +153,7 @@ export default function Admin() {
                         <Stats stats={data.stats} />
                         <AdminOrders orders={data.orders} token={token} onChange={update('orders')} />
                         <AdminProducts products={data.products} token={token} onChange={update('products')} />
-                        <AdminMessages messages={data.messages} token={token} />
+                        <AdminMessages messages={data.messages} token={token} onSaved={updateMessage} />
                     </section>
                 )}
             </main>

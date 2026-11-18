@@ -32,16 +32,21 @@ function shrinkImage(file) {
         const url = URL.createObjectURL(file);
         const img = new Image();
         img.onload = () => {
-            const scale = Math.min(1, 1000 / Math.max(img.width, img.height));
-            const canvas = document.createElement('canvas');
-            canvas.width = Math.round(img.width * scale);
-            canvas.height = Math.round(img.height * scale);
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';           // las PNG transparentes quedan con fondo blanco
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            URL.revokeObjectURL(url);
-            resolve(canvas.toDataURL('image/jpeg', 0.85));
+            try {
+                const scale = Math.min(1, 1000 / Math.max(img.width, img.height));
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.round(img.width * scale);
+                canvas.height = Math.round(img.height * scale);
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';           // las PNG transparentes quedan con fondo blanco
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/jpeg', 0.85));
+            } catch (err) {
+                reject(new Error('No se pudo preparar la foto. Inténtalo de nuevo.'));
+            } finally {
+                URL.revokeObjectURL(url);
+            }
         };
         img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('No se pudo leer la foto')); };
         img.src = url;
