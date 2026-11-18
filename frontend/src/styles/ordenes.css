@@ -282,6 +282,7 @@
 .next-step p { margin-top: .2rem; font-size: .8rem; line-height: 1.5; color: var(--text-soft); }
 .next-step a { display: inline-block; margin-top: .35rem; font-size: .78rem; font-weight: 600; color: var(--rose-light); text-decoration: none; }
 .next-step a:hover { text-decoration: underline; }
+.next-step a + a { margin-left: 1rem; }  /* separa «Enviar comprobante» de «Ver formas de pago» */
 .next-step.pay { border-color: rgba(217,165,102,.4); background: rgba(217,165,102,.08); }
 .next-step.pay > i { color: var(--gold); }
 .next-step .guia { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; font-size: .95rem; font-weight: 700; color: var(--text-white); letter-spacing: .5px; }

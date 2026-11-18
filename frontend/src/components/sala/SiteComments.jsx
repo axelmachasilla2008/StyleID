@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import Stars from '../tienda/Stars.jsx';
 import { api } from '../../lib/api.js';
 import { shortDate } from '../../lib/texto.js';
+import { getSession } from '../../lib/sesion.js';
 
 const EMPTY = { type: 'comentario', name: '', contact: '', requestType: 'ropa', product: '', text: '' };
 
@@ -56,7 +57,7 @@ export default function SiteComments() {
                 method: 'POST',
                 body: {
                     type: isRequest ? 'pedido' : 'comentario',
-                    name: form.name.trim() || 'Anónimo',
+                    name: form.name.trim() || getSession() || 'Anónimo',
                     contact: isRequest ? contact : '',
                     requestType: form.requestType,
                     productId: 'general',

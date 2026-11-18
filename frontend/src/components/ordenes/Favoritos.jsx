@@ -12,7 +12,8 @@ import { showToast } from '../../lib/toast.js';
 // Datos de respaldo para favoritos guardados solo con el nombre o con una foto local antigua
 const KNOWN = new Map([
     ...CATALOG.map((p) => [p.name, { price: money(p.price), img: p.img }]),
-    ...[...TRENDING, ...NEW_ARRIVALS].map((p) => [p.name, { price: money(p.price), img: p.img, href: 'sala.html#tendencia' }])
+    ...TRENDING.map((p) => [p.name, { price: money(p.price), img: p.img, href: 'sala.html#tendencia' }]),
+    ...NEW_ARRIVALS.map((p) => [p.name, { price: money(p.price), img: p.img, href: 'sala.html#novedades' }])
 ]);
 const isLocalImg = (img) => /^\.?\/?img\//.test(img || '');
 

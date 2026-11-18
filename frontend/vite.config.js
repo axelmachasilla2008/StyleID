@@ -16,8 +16,11 @@ export default defineConfig({
     plugins: [react()],
     server: {
         port: 5173,
-        // En desarrollo, las llamadas a /api van al servidor Express
-        proxy: { '/api': 'http://localhost:3002' }
+        // En desarrollo, la API y las fotos subidas van al servidor Express
+        proxy: {
+            '/api': 'http://localhost:3002',
+            '/sala/img/productos': 'http://localhost:3002'
+        }
     },
     build: {
         outDir: 'dist',
