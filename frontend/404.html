@@ -8,6 +8,24 @@
     <link rel="icon" href="https://res.cloudinary.com/i7u5kw04/image/upload/f_auto,q_auto/v1794798291/styleid/sitio/logo.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap">
+    <!-- Cambio de página suave: se activa aquí (no en el CSS que carga React, que llega tarde)
+         y se ignora si el navegador cancela la animación, que no es un fallo de la tienda -->
+    <style>
+        @view-transition { navigation: auto; }
+        @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+    </style>
+    <script>
+        (function () {
+            function calmar(e) {
+                if (!e.viewTransition) return;
+                e.viewTransition.ready.catch(function () {});
+                e.viewTransition.finished.catch(function () {});
+                if (e.viewTransition.updateCallbackDone) e.viewTransition.updateCallbackDone.catch(function () {});
+            }
+            addEventListener('pageswap', calmar);
+            addEventListener('pagereveal', calmar);
+        })();
+    </script>
 </head>
 <body>
     <!-- Aplica el tema claro u oscuro antes de pintar (evita un destello del tema equivocado) -->
