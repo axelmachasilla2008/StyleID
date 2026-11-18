@@ -13,6 +13,7 @@ import { crearStore } from './crearStore.js';
 export const avisoStore = crearStore(null);
 let hideTimer = null;
 let scriptShown = false;
+let failedRequest = '';
 
 export function showAviso(kind, title, text, details = [], hint = '', action = null) {
     clearTimeout(hideTimer);
@@ -28,6 +29,7 @@ export function showAviso(kind, title, text, details = [], hint = '', action = n
 }
 
 export function hideAviso() {
+    failedRequest = '';
     avisoStore.set(null);
 }
 
@@ -37,6 +39,7 @@ const currentKind = () => avisoStore.get()?.kind || '';
 
 export function reportApiResponse(method, url, res, data) {
     if (res.status === 401 && data?.codigo === 'SESION_REQUERIDA') {
+        failedRequest = `${method} ${url}`;
         showAviso(
             'servidor',
             'Tu sesión caducó',
@@ -48,6 +51,7 @@ export function reportApiResponse(method, url, res, data) {
         return;
     }
     if (res.status >= 500) {
+        failedRequest = `${method} ${url}`;
         showAviso(
             'servidor',
             'La tienda tuvo un problema',
@@ -62,8 +66,8 @@ export function reportApiResponse(method, url, res, data) {
         );
         return;
     }
-    // La tienda volvió a responder: se quita el aviso de conexión
-    if (currentKind() === 'red' || currentKind() === 'servidor') hideAviso();
+    // Un éxito de otra ruta no resuelve el fallo ni una sesión caducada
+    if (res.ok && (currentKind() === 'red' || (currentKind() === 'servidor' && failedRequest === `${method} ${url}`))) hideAviso();
 }
 
 export function reportNetworkError(method, url, err) {
@@ -128,10 +132,13 @@ export function installErrorWatchers() {
 
     window.addEventListener('unhandledrejection', (e) => {
         const reason = e.reason;
-        // Los fallos de red ya se avisan en reportNetworkError
-        if (!reason || reason.name === 'AbortError' || reason.name === 'TypeError') return;
+        // Una cancelación no es un fallo; los TypeError sí pueden ser errores de código
+        if (!reason || reason.name === 'AbortError') return;
         // Animación de cambio de página cancelada por el navegador (no es un fallo de la tienda)
-        if (reason.name === 'InvalidStateError' || /transition/i.test(String(reason.message || ''))) return;
+        if (reason.name === 'InvalidStateError' || /transition/i.test(String(reason.message || ''))) {
+            e.preventDefault();   // tampoco se muestra como error en la consola
+            return;
+        }
         scriptError(reason.message || String(reason), 'Promesa sin controlar', reason.stack);
     });
 }

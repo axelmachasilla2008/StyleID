@@ -39,7 +39,8 @@ export default function ErrorBanner() {
     }
 
     return (
-        <div className={`app-error${open ? ' is-open' : ''}${isOk ? ' is-ok' : ''}`} role="alert">
+        <div className={`app-error${open ? ' is-open' : ''}${isOk ? ' is-ok' : ''}`} role="alert"
+            aria-hidden={!open} inert={!open} style={{ pointerEvents: open ? 'auto' : 'none' }}>
             <div className="app-error-main">
                 <span className="app-error-icon">
                     <i className={`fa-solid ${ICONS[shown.kind] || ICONS.script}`} aria-hidden="true"></i>
@@ -47,14 +48,14 @@ export default function ErrorBanner() {
                 <div className="app-error-text">
                     <strong>{shown.title}</strong>
                     <p>{shown.text}</p>
-                    <div className="app-error-actions" hidden={isOk}>
+                    {!isOk && <div className="app-error-actions">
                         <button type="button" className="primary" onClick={mainAction}>
                             {shown.action?.label || 'Reintentar'}
                         </button>
                         <button type="button" aria-expanded={techOpen} onClick={() => setTechOpen((v) => !v)}>
                             Detalles técnicos
                         </button>
-                    </div>
+                    </div>}
                 </div>
                 <button type="button" className="app-error-close" aria-label="Cerrar aviso" onClick={hideAviso}>
                     <i className="fa-solid fa-xmark" aria-hidden="true"></i>
