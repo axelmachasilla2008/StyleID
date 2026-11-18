@@ -1,0 +1,27 @@
+# Publicación en Render (render.com): un solo servicio web con Express
+# que sirve la API en /api y la tienda de React compilada en /sala.
+# Las claves no van aquí: Render las pide al crear el servicio.
+services:
+  - type: web
+    name: styleid
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: MONGODB_URI
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_SECRET
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

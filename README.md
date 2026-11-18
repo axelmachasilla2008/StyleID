@@ -87,6 +87,18 @@ Abre <http://localhost:3002>. Express sirve la tienda compilada (`frontend/dist`
 npm run test:api
 ```
 
+## Publicar en internet (Render)
+
+El archivo `render.yaml` deja lista la tienda para [Render](https://render.com) (plan gratuito):
+
+1. En Render: **New → Blueprint** y elige este repositorio.
+2. Completa las claves que pide (`MONGODB_URI`, `ADMIN_PASSWORD` y las de Cloudinary). `ADMIN_SECRET` se genera solo.
+3. En MongoDB Atlas → *Network Access*, permite la conexión desde Render (`0.0.0.0/0`).
+
+Render instala, compila (`npm run build`) y arranca Express (`npm start`). La tienda queda en
+`https://<nombre-del-servicio>.onrender.com`. En el plan gratuito el servidor se duerme si nadie
+lo usa, y la primera visita tarda unos segundos en despertar.
+
 ## Variables de entorno (`backend/.env`)
 
 | Variable | Obligatoria | Para qué sirve |
